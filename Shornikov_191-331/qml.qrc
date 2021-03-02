@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>img/bg_lab1.jpg</file>
+        <file>img/bg_lab2.jpg</file>
+        <file>img/bg_lab3.jpg</file>
+    </qresource>
+</RCC>
