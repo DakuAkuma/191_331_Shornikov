@@ -5,5 +5,6 @@
         <file>img/bg_lab1.jpg</file>
         <file>img/bg_lab2.jpg</file>
         <file>img/bg_lab3.jpg</file>
+        <file>Page1GUI.qml</file>
     </qresource>
 </RCC>
