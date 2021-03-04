@@ -38,13 +38,13 @@ ApplicationWindow {
                 id: headText
                 color: "#7734ad"
                 text: qsTr("Lab No. 1. GUI elements.")
-                font.pixelSize: Qt.application.font.pixelSize * (1 + parent.width*0.0022) // Адаптивный размер шрифта
+                font.pixelSize: Qt.application.font.pixelSize * 1.5
                 anchors.verticalCenter: parent.verticalCenter
                 // Header`s figures.
                 Rectangle {
                     id: circ1
-                    width: Qt.application.font.pixelSize * (1 + parent.width*0.0034) // Применяется адаптивный размер кружка
-                    height: width                                                    // чтобы не было проблем с отображением
+                    width: Qt.application.font.pixelSize*1.5
+                    height: width
                     radius: width/2
                     color: "green"
                     anchors.left: headText.right
@@ -53,7 +53,7 @@ ApplicationWindow {
                 }
                 Rectangle {
                     id: circ2
-                    width: Qt.application.font.pixelSize * (1 + parent.width*0.0034)
+                    width: Qt.application.font.pixelSize*1.5
                     height: width
                     radius: width/2
                     color: "green"
@@ -62,7 +62,7 @@ ApplicationWindow {
                     anchors.leftMargin: defMargin
                 }
                 Rectangle {
-                    width: Qt.application.font.pixelSize * (1 + parent.width*0.0034)
+                    width: Qt.application.font.pixelSize*1.5
                     height: width
                     radius: width/2
                     color: "darkviolet"
