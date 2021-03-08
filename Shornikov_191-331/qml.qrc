@@ -6,5 +6,8 @@
         <file>img/bg_lab2.jpg</file>
         <file>img/bg_lab3.jpg</file>
         <file>Page1GUI.qml</file>
+        <file>Page2Media.qml</file>
+        <file>sample.mp4</file>
+        <file>balet.mp4</file>
     </qresource>
 </RCC>

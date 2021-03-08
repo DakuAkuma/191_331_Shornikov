@@ -22,71 +22,8 @@ ApplicationWindow {
             id: page1GUI
         }
 
-        Page { // Lab No.2. Multimedia.
-            // Page ID
+        Page2Media {
             id: page2Media
-            // Page`s background
-            background: Rectangle {
-                id: bg
-                anchors.fill: parent
-                color: "black"
-            }
-            header: ToolBar {
-                // Header`s background color.
-                background: Rectangle {
-                    id: bg2
-                    anchors.fill: parent
-                    color: "black"
-                }
-                // Header`s title
-                Label {
-                    id: headText
-                    color: "#7734ad"
-                    text: qsTr("Lab No. 2. Multimedia.")
-                    font.pixelSize: Qt.application.font.pixelSize * 1.5
-                    anchors.verticalCenter: parent.verticalCenter
-                    // Header`s figures.
-                    Rectangle {
-                        id: circ1
-                        width: Qt.application.font.pixelSize*1.5
-                        height: width
-                        radius: width/2
-                        color: "green"
-                        anchors.left: headText.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: defMargin
-                    }
-                    Rectangle {
-                        id: circ2
-                        width: Qt.application.font.pixelSize*1.5
-                        height: width
-                        radius: width/2
-                        color: "green"
-                        anchors.left: circ1.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: defMargin
-                    }
-                    Rectangle {
-                        width: Qt.application.font.pixelSize*1.5
-                        height: width
-                        radius: width/2
-                        color: "darkviolet"
-                        anchors.left: circ2.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: defMargin
-                    }
-                }
-            }
-
-            Label {
-                text: qsTr("There will be Lab No.2 soon.")
-                anchors.centerIn: parent
-            }
-
-            footer: Label {
-                horizontalAlignment: "AlignHCenter"
-                text: qsTr("Made by Andrey \"Akuma\" Shornikov in 2021.")
-            }
         }
 
         Page {
