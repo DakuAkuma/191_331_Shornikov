@@ -150,7 +150,7 @@ Page { // Lab No.2. Multimedia.
         visible: mediaPlayer.checked
         anchors.top: choose.bottom
         width: parent.width-25
-        height: parent.height-60-choose.height
+        height: parent.height-(parent.height*(1.33/6))-choose.height
         anchors.horizontalCenter: parent.horizontalCenter
         color: "black"
 
@@ -177,16 +177,48 @@ Page { // Lab No.2. Multimedia.
         }
     }
 
-    RowLayout {
+    ColumnLayout {
         visible: mediaPlayer.checked
         anchors.top: playerContainer.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-
-        // W.I.P. / Track video`s position.
+        Layout.maximumWidth: parent.width
+        // Track video`s position.
         Slider {
             id: positionSlider
+            from: 0
+            to: player.duration
+            value: player.position
+            stepSize: 0.001
+            Layout.maximumWidth: playerContainer.width
+            Layout.alignment: Qt.AlignHCenter
+            background: Rectangle {
+                x: positionSlider.leftPadding
+                y: positionSlider.topPadding + positionSlider.availableHeight / 2 - height / 2
+                implicitHeight: 4
+                implicitWidth: Layout.maximumWidth
+                width: positionSlider.availableWidth
+                height: implicitHeight
+                radius: 2
+                color: "#931124"
+                Rectangle {
+                    width: positionSlider.visualPosition * parent.width
+                    height: parent.height
+                    color: "green"
+                    radius: 2
+                }
+            }
+            // Custom handler
+            handle: Rectangle {
+                x: positionSlider.leftPadding + positionSlider.visualPosition * (positionSlider.availableWidth - width)
+                y: positionSlider.topPadding + positionSlider.availableHeight / 2 - height / 2
+                implicitWidth: 26
+                implicitHeight: 26
+                radius: 13
+                color: positionSlider.pressed ? "#f0f0f0" : "#f6f6f6"
+                border.color: "#bdbebf"
+            }
         }
 
         // Slider for volume
@@ -196,6 +228,8 @@ Page { // Lab No.2. Multimedia.
             to: 1.0
             stepSize: 0.1
             value: to
+            Layout.maximumWidth: 200
+            Layout.alignment: Qt.AlignRight
             background: Rectangle {
                 x: volumeSlider.leftPadding
                 y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2

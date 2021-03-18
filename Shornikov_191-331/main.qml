@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
+    id: mainWindow
     width: 640
     height: 480
     visible: true
@@ -12,6 +13,7 @@ ApplicationWindow {
     // Add this property to reduce amount of code repeats.
     property int defMargin: 5
 
+    signal btnHTTPRequest()
 
     SwipeView {
         id: swipeView
@@ -27,6 +29,7 @@ ApplicationWindow {
         }
 
         Page {
+            id: page3Network
             header: Label {
                 color: "#a4f25f"
                 text: qsTr("Lab No.3. Graphical effects")
@@ -34,9 +37,12 @@ ApplicationWindow {
                 padding: 10
             }
 
-            Label {
-                text: qsTr("There will be Lab No.3 soon.")
+            Button {
+                id: btnRequest
                 anchors.centerIn: parent
+                onClicked: {
+                    mainWindow.btnHTTPRequest();
+                }
             }
 
             footer: Label {

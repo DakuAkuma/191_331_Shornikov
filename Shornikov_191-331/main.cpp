@@ -1,14 +1,15 @@
+#include "httpcontroller.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQuickView>
 
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-
+    HTTPController httpcontroller;
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -18,5 +19,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
+    QObject::connect(engine.rootObjects().first(), SIGNAL(btnHTTPRequest()),
+            &httpcontroller, SLOT(getPageInfo()));
     return app.exec();
 }
