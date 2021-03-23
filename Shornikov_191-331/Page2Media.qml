@@ -15,13 +15,13 @@ Page { // Lab No.2. Multimedia.
 
     property bool _mediaFlag: true
     function pressMedia(eventHandler) {
-       if (_mediaFlag) {
-           eventHandler.play()
-           _mediaFlag = false
-       } else {
-           eventHandler.pause()
-           _mediaFlag = true
-       }
+        if (_mediaFlag) {
+            eventHandler.play()
+            _mediaFlag = false
+        } else {
+            eventHandler.pause()
+            _mediaFlag = true
+        }
     }
 
     // Haeder
@@ -219,6 +219,10 @@ Page { // Lab No.2. Multimedia.
                 color: positionSlider.pressed ? "#f0f0f0" : "#f6f6f6"
                 border.color: "#bdbebf"
             }
+
+            onMoved: {
+                player.seek(positionSlider.value);
+            }
         }
 
         // Slider for volume
@@ -261,6 +265,48 @@ Page { // Lab No.2. Multimedia.
 
 
     //Camera
+    Rectangle{
+        visible: camera.checked
+        id: cameraContainer
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        anchors.top: choose.bottom
+        anchors.topMargin: 5
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 55
+
+        Camera {
+            id: cameraItem
+
+            imageCapture {
+                onImageCaptured: {
+                    photoPreview.source = preview
+                }
+            }
+        }
+
+        VideoOutput {
+            source: cameraItem
+            focus : visible
+            anchors.fill: parent
+            autoOrientation: true
+
+            MouseArea {
+                anchors.fill: parent;
+                onClicked: cameraItem.imageCapture.capture()
+            }
+        }
+
+        Image {
+            id: photoPreview
+            anchors.right: parent.right
+            anchors.top: parent.top
+            width: parent.width*0.1
+            height: parent.height*0.1
+        }
+    }
 
     // Footer.
     footer: Label {

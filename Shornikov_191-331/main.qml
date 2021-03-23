@@ -1,4 +1,6 @@
 import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtWebEngine 1.8
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4
@@ -17,6 +19,7 @@ ApplicationWindow {
 
     SwipeView {
         id: swipeView
+        objectName: "swipeView"
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
@@ -28,28 +31,32 @@ ApplicationWindow {
             id: page2Media
         }
 
-        Page {
+        Page3Network {
             id: page3Network
-            header: Label {
-                color: "#a4f25f"
-                text: qsTr("Lab No.3. Graphical effects")
-                font.pixelSize: Qt.application.font.pixelSize * 2
-                padding: 10
-            }
-
-            Button {
-                id: btnRequest
-                anchors.centerIn: parent
-                onClicked: {
-                    mainWindow.btnHTTPRequest();
-                }
-            }
-
-            footer: Label {
-                horizontalAlignment: "AlignHCenter"
-                text: qsTr("Made by Andrey \"Akuma\" Shornikov in 2021.")
-            }
+            objectName: "page3Network"
         }
+
+        Page {
+        }
+        /*
+        Page {
+        }
+
+        Page {
+        }
+
+        Page {
+        }
+
+        Page {
+        }
+
+        Page {
+        }
+
+        Page {
+        }
+        */
     }
 
     footer: TabBar {
@@ -63,7 +70,7 @@ ApplicationWindow {
 
         TabButton {
             id: buttonLab1
-            text: qsTr("Lab No.1")
+            text: qsTr("Lab 1")
             font.pixelSize: Qt.application.font.pixelSize * 1.5
             // Custom text in button.
             contentItem: Text {
@@ -78,7 +85,7 @@ ApplicationWindow {
         }
         TabButton {
             id: buttonLab2
-            text: qsTr("Lab No.2")
+            text: qsTr("Lab 2")
             font.pixelSize: Qt.application.font.pixelSize * 1.5
             contentItem: Text {
                 text: buttonLab2.text
@@ -92,7 +99,7 @@ ApplicationWindow {
         }
         TabButton {
             id: buttonLab3
-            text: qsTr("Lab No.3")
+            text: qsTr("Lab 3")
             font.pixelSize: Qt.application.font.pixelSize * 1.5
             contentItem: Text {
                 text: buttonLab3.text
@@ -104,5 +111,110 @@ ApplicationWindow {
                 elide: Text.ElideRight
             }
         }
+
+        TabButton {
+            id: buttonLab4
+            text: qsTr("Lab 4")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab4.text
+                font: buttonLab4.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab4.checked ? "indigo" : buttonLab4.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
+        /*
+        TabButton {
+            id: buttonLab5
+            text: qsTr("Lab 5")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab5.text
+                font: buttonLab5.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab5.checked ? "indigo" : buttonLab5.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
+
+        TabButton {
+            id: buttonLab6
+            text: qsTr("Lab 6")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab6.text
+                font: buttonLab6.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab6.checked ? "indigo" : buttonLab6.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
+
+        TabButton {
+            id: buttonLab7
+            text: qsTr("Lab 7")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab7.text
+                font: buttonLab7.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab7.checked ? "indigo" : buttonLab7.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
+
+        TabButton {
+            id: buttonLab8
+            text: qsTr("Lab 8")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab8.text
+                font: buttonLab8.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab8.checked ? "indigo" : buttonLab8.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
+
+        TabButton {
+            id: buttonLab9
+            text: qsTr("Lab 9")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab9.text
+                font: buttonLab9.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab9.checked ? "indigo" : buttonLab9.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }
+
+        TabButton {
+            id: buttonLab10
+            text: qsTr("Lab 10")
+            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            contentItem: Text {
+                text: buttonLab10.text
+                font: buttonLab10.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonLab10.checked ? "indigo" : buttonLab10.down ? "f0f0f0" : "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+        }*/
     }
 }

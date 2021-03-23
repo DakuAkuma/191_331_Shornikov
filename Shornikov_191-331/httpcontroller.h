@@ -14,6 +14,7 @@ public:
     ~HTTPController()
     {
         delete nam;
+        delete proto;
     }
     explicit HTTPController(QObject *parent = nullptr);
 
@@ -21,9 +22,10 @@ public:
     QNetworkAccessManager * nam = nullptr;
 public slots:
     void getPageInfo();
-    //void replyFinished(QNetworkReply *reply);
 signals:
-
+    void toQML(const QString &htmlCode, const QString &parsedValue);
+protected:
+    QObject* proto;
 };
 
 #endif // HTTPCONTROLLER_H

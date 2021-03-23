@@ -9,5 +9,6 @@
         <file>Page2Media.qml</file>
         <file>sample.mp4</file>
         <file>balet.mp4</file>
+        <file>Page3Network.qml</file>
     </qresource>
 </RCC>

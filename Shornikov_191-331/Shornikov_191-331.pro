@@ -1,4 +1,4 @@
-QT += quick multimedia multimediawidgets network
+QT += core quick qml multimedia multimediawidgets network
 
 CONFIG += c++11
 
@@ -43,3 +43,4 @@ android {
 
 HEADERS += \
     httpcontroller.h
+android: include(C:/Android/sdk/android_openssl/openssl.pri)

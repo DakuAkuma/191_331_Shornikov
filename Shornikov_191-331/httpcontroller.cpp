@@ -1,30 +1,33 @@
 #include "httpcontroller.h"
-
 #include <QEventLoop>
+#include <QQuickItem>
+#include <QQuickView>
 
-HTTPController::HTTPController(QObject *parent) : QObject(parent)
+HTTPController::HTTPController(QObject *parent) : proto(parent)
 {
     nam = new QNetworkAccessManager(this);
 }
 
 void HTTPController::getPageInfo() {
+    // GET request to site.
+    QNetworkReply *reply = nam->get(QNetworkRequest(QUrl("https://www.youtube.com"))); // /search?q=1+доллар+в+рублях
+    // Init of LOOPEvents
     QEventLoop evtLoop;
-    connect(nam, &QNetworkAccessManager::finished,
-            &evtLoop, &QEventLoop::quit);
-    QNetworkReply *reply = nam->get(QNetworkRequest(QUrl("https://new.mospolytech.ru/")));
+    connect(nam, &QNetworkAccessManager::finished, &evtLoop, &QEventLoop::quit);
+    // Exec of LOOP
     evtLoop.exec();
+    // Server response handling
     qDebug() << "*** Ожидание сервера завершено, ответ: ***";
     qDebug() << "** Pairs: **";
+    qDebug() << "\"HTTP Status\"" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString();
     for (auto pair : reply->rawHeaderPairs()) {
-        // FULL INFO
-        //qDebug() << "** Ключ:" << pair.first << "; Значение:" << pair.second <<"\n";
-        // ONLY NEEDED INFO
         qDebug() << pair.first << pair.second;
     }
     // HTML code.
-    //qDebug() << "** Data: **\n" << reply->readAll();
-}
+    qDebug() << "\"Content length\"" << reply->header(QNetworkRequest::ContentLengthHeader).toString();
 
-/*void HTTPController::replyFinished(QNetworkReply * reply) {
-    // Вывод в GUI.
-}*/
+    // Emit server to answer to QML.
+    emit toQML(QString(reply->readAll()), NULL);
+
+    delete reply;
+}
