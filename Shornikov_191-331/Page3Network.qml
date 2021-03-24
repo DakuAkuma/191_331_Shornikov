@@ -152,7 +152,7 @@ Page {
         anchors.topMargin: parent.height*0.1
         anchors.horizontalCenter: parent.horizontalCenter
         color: "green"
-        text: qsTr("Стоимость 2 Долларов США в Российских рублях на данный момент.")
+        text: qsTr("2 USD в RUB:")
         font.pixelSize: Qt.application.font.pixelSize*1.65
     }
 
@@ -163,7 +163,7 @@ Page {
         anchors.topMargin: 3
         anchors.horizontalCenter: parent.horizontalCenter
         color: "green"
-        text: qsTr("Запросите информацую с сервера!")
+        text: qsTr("No data!")
         font.pixelSize: Qt.application.font.pixelSize*1.85
     }
 

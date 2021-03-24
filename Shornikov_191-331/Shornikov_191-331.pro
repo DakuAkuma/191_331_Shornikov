@@ -26,7 +26,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RC_ICONS = "icon.ico"
 
 android {
-    QT += androidextras
+    QT += androidextras webview
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
