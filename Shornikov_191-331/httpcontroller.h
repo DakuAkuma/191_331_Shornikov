@@ -13,19 +13,22 @@ class HTTPController : public QObject
 public:
     ~HTTPController()
     {
+        // Kill them (dynamic variables) all!!!
         delete nam;
         delete proto;
+        delete reply;
     }
     explicit HTTPController(QObject *parent = nullptr);
 
     // Вместо глоб. переменной - свойство класса.
     QNetworkAccessManager * nam = nullptr;
 public slots:
+    void sendPageInfo();
     void getPageInfo();
 signals:
-    void toQML(const QString &htmlCode, const QString &parsedValue);
 protected:
     QObject* proto;
+    QNetworkReply* reply;
 };
 
 #endif // HTTPCONTROLLER_H

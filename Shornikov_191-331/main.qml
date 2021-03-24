@@ -16,6 +16,7 @@ ApplicationWindow {
     property int defMargin: 5
 
     signal btnHTTPRequest()
+    signal btnHTTPResponse()
 
     SwipeView {
         id: swipeView

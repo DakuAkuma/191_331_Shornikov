@@ -5,13 +5,6 @@ import QtQuick.Controls.Styles 1.4
 
 Page {
     id: page3Network
-    Connections {
-        target: httpController
-        function onToQML(htmlCode, parsedValue) {
-            pageCode.text = htmlCode;
-            //valueKeeper.text = "1 доллар = " + parsedValue + " р.";
-        }
-    }
     // Page`s background
     background: Rectangle {
         anchors.fill: parent
@@ -64,13 +57,12 @@ Page {
             }
         }
     }
-
     RowLayout {
         id: btnHolder
-        spacing: 15
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 20
+        spacing: 15
         Button {
             id: btnRequest
             onClicked: {
@@ -97,14 +89,14 @@ Page {
             }
         }
         Button {
-            id: btnShow
+            id: btnResponse
             onClicked: {
-                //mainWindow.btnHTTPShow();
+                mainWindow.btnHTTPResponse();
             }
-            text: qsTr("Отобразить страницу")
+            text: qsTr("Получить ответ")
             contentItem: Text {
-                text: btnShow.text
-                font: btnShow.font
+                text: btnResponse.text
+                font: btnResponse.font
                 opacity: enabled ? 1.0 : 0.3
                 color: "green"
                 horizontalAlignment: Text.AlignHCenter
@@ -115,7 +107,7 @@ Page {
                 implicitWidth: 100
                 implicitHeight: 40
                 opacity: enabled ? 1 : 0.3
-                color: btnShow.down ? "#f0f0f0" : "#fdfdfd"
+                color: btnResponse.down ? "#f0f0f0" : "#fdfdfd"
                 border.color: "indigo"
                 border.width: 1
                 radius: 2
@@ -128,7 +120,7 @@ Page {
         anchors.top: btnHolder.bottom
         anchors.topMargin: 15
         anchors.left: parent.left
-        anchors.leftMargin: parent.width*0.05
+        anchors.leftMargin: parent.width*0.035
         anchors.right: parent.right
         anchors.rightMargin: anchors.leftMargin
         // acnhors.bottom: id.top // W.I.P.
@@ -142,9 +134,10 @@ Page {
             id: pageCode
             objectName: "pageCode"
             // Just a placeholder
-            placeholderText: qsTr("Нажмите на кнопку \"Отобразить страницу\"")
-            placeholderTextColor: "darkgray"
+            text: qsTr("Нажмите на кнопку \"Отправить запрос\", после чего получите ответ")
+            color: "green"
             readOnly: true
+            textFormat: "RichText"
             anchors.fill: parent
             background: Rectangle {
                 // Background of text area.
@@ -154,13 +147,24 @@ Page {
     }
 
     Label {
-        id: valueKeeper
+        id: valueKeeperLabel
         anchors.top: pageContainer.bottom
-        anchors.topMargin: parent.height*0.2
+        anchors.topMargin: parent.height*0.1
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: "green"
+        text: qsTr("Стоимость 2 Долларов США в Российских рублях на данный момент.")
+        font.pixelSize: Qt.application.font.pixelSize*1.65
+    }
+
+    Label {
+        id: valueKeeper
+        objectName: "valueKeeper"
+        anchors.top: valueKeeperLabel.bottom
+        anchors.topMargin: 3
         anchors.horizontalCenter: parent.horizontalCenter
         color: "green"
         text: qsTr("Запросите информацую с сервера!")
-        font.pixelSize: Qt.application.font.pixelSize*1.8
+        font.pixelSize: Qt.application.font.pixelSize*1.85
     }
 
 
@@ -177,4 +181,12 @@ Page {
         text: qsTr("Made by Andrey \"Akuma\" Shornikov in 2021.")
         color: "indigo"
     }
+
+    //    Connections {
+    //        target: httpController
+    //        function onToQML(htmlCode, parsedValue) {
+    //            pageCode.text = htmlCode;
+    //            valueKeeper.text = "1$ = " + parsedValue + " руб.";
+    //        }
+    //    }
 }

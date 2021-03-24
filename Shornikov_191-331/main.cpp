@@ -1,6 +1,5 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
 #include "httpcontroller.h"
 
 int main(int argc, char *argv[])
@@ -18,14 +17,13 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-    QQmlContext *context = engine.rootContext();
     // HTTP Objects + Signals
-    HTTPController httpcontroller;
-    // Making HTTP Controller visible in QML
-    context->setContextProperty("httpController", &httpcontroller);
     QObject *main = engine.rootObjects().first();
+    HTTPController httpcontroller(main);
     // Signal connection
     QObject::connect(main, SIGNAL(btnHTTPRequest()),
             &httpcontroller, SLOT(getPageInfo()));
+    QObject::connect(main, SIGNAL(btnHTTPResponse()),
+            &httpcontroller, SLOT(sendPageInfo()));
     return app.exec();
 }
