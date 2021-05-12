@@ -16,6 +16,8 @@ ApplicationWindow {
 
     signal btnHTTPRequest()
     signal btnHTTPResponse()
+    signal requestMessage()
+    signal getFriends()
 
     SwipeView {
         id: swipeView
@@ -36,12 +38,14 @@ ApplicationWindow {
             objectName: "page3Network"
         }
 
-        Page {
-        }
-        /*
-        Page {
+        Page4OAUTH2 {
+            id: page4OAUTH2
         }
 
+        Page5download {
+            id: page5download
+        }
+        /*
         Page {
         }
 
@@ -126,7 +130,7 @@ ApplicationWindow {
                 elide: Text.ElideRight
             }
         }
-        /*
+
         TabButton {
             id: buttonLab5
             text: qsTr("Lab 5")
@@ -141,7 +145,7 @@ ApplicationWindow {
                 elide: Text.ElideRight
             }
         }
-
+        /*
         TabButton {
             id: buttonLab6
             text: qsTr("Lab 6")

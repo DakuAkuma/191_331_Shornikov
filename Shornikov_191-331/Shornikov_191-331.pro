@@ -1,4 +1,4 @@
-QT += core quick qml multimedia multimediawidgets network
+QT += core quick qml multimedia multimediawidgets network webview
 
 CONFIG += c++11
 
@@ -7,6 +7,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        friendsmodel.cpp \
         httpcontroller.cpp \
         main.cpp
 
@@ -26,7 +27,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RC_ICONS = "icon.ico"
 
 android {
-    QT += androidextras webview
+    QT += androidextras
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
@@ -42,5 +43,6 @@ android {
 }
 
 HEADERS += \
+    friendsmodel.h \
     httpcontroller.h
 android: include(C:/Android/sdk/android_openssl/openssl.pri)

@@ -10,5 +10,7 @@
         <file>sample.mp4</file>
         <file>balet.mp4</file>
         <file>Page3Network.qml</file>
+        <file>Page4OAUTH2.qml</file>
+        <file>Page5download.qml</file>
     </qresource>
 </RCC>
