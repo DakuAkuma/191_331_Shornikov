@@ -2,10 +2,15 @@
 #include <QEventLoop>
 #include <QQuickItem>
 #include <QQuickView>
+#include <QUrl>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 HTTPController::HTTPController(QObject *parent) : proto(parent)
 {
     nam = new QNetworkAccessManager(this);
+    modelController = new friendsModel();
 }
 
 void HTTPController::sendPageInfo()
@@ -67,4 +72,42 @@ QString HTTPController::getToken(QString url)
         qDebug() << "Got error/-s";
     }
     return " "; // return nothing.
+}
+
+void HTTPController::restCall()
+{
+    modelController->clear();
+    QEventLoop loop;
+    connect(nam, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
+    reply = nam->get(QNetworkRequest(QUrl("https://api.vk.com/method/friends.get?order=random&count=10"
+                                          "&fields=domain,photo_50,online"
+                                          "&access_token="+access_token+"&v=5.21"))); // Запрос на 10 случайных друзей из списка друзей
+    loop.exec();
+
+    QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+    QJsonValue response = document.object().value("response");
+    QJsonArray array = response.toObject()["items"].toArray();
+    qDebug() << "Число друзей: " << array.count();
+
+    for (int i = 0; i < array.count(); i++) {
+        QJsonObject item = array.at(i).toObject();
+        qDebug() << "Друг #" << i;
+        QString i_domain = item.value("domain").toString();
+        qDebug() << "id (domain): " << i_domain;
+        QString i_name = item.value("first_name").toString();
+        qDebug() << "Имя: " << i_name;
+        QString i_surname = item.value("last_name").toString();
+        qDebug() << "Фамилия: " << i_surname;
+        QUrl i_photo = item.value("photo_50").toString();
+        qDebug() << "Сслыка на фото: " << i_photo;
+        bool i_status = item.value("online").toBool();
+        qDebug() << "Статус: " << ((i_status == 0) ? "Не в сети" : "В сети") << i_status;
+
+        modelController->addItem(friendObject(i_domain, i_photo, i_name, i_status, i_surname));
+        qDebug() << modelController->FriendDomain;
+        qDebug() << modelController->FriendPhoto;
+        qDebug() << modelController->FriendName;
+        qDebug() << modelController->FriendStatus;
+        qDebug() << modelController->FriendSurname;
+    }
 }

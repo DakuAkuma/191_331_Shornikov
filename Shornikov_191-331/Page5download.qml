@@ -68,49 +68,84 @@ Page {
         }
     }
 
-    ColumnLayout {
-        anchors.centerIn: parent
-        spacing: 15
-        Label {
-            id: txtLabel
-            Layout.alignment: Qt.AlignHCenter
-            Text {
-                id: txt
-                text: qsTr("Hello, Billy!")
-                anchors.centerIn: txtLabel
-                color: "green"
-                font.pixelSize: 16
+    // Content
+    ScrollView{
+        anchors.fill: parent
+
+        GridView{
+            id: grid
+            visible: true
+            anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 25
+            anchors.leftMargin: 45
+            cellWidth: 250
+            cellHeight: 100
+            model: modelController
+            clip: true
+
+            delegate: Rectangle {
+                id: delegate
+                color: "white"
+                width: grid.cellWidth
+                height: grid.cellHeight
+                anchors.margins: 25
+                anchors.rightMargin: 45
+                border.color: "black"
+
+                Image{
+                    id: img
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                    source: model.u_img
+                    height: 50
+                    width: 50
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Label { // Domain (id)
+                    color: "indigo"
+                    text: "Иден. пользователя: " + model.u_domain
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: 5
+                    font.family: "Helvetica"
+                    font.pointSize: 9
+                }
+
+                Label{ // Name
+                    color: "indigo"
+                    text: "Имя: " + model.u_name
+                    anchors.centerIn: parent
+                    font.family: "Helvetica"
+                    font.pointSize: 9
+                }
+
+                Label{ // Surname
+                    color: "indigo"
+                    text: "Фамилия: " + model.u_surname
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 10
+                    font.family: "Helvetica"
+                    font.pointSize: 9
+                }
+
+                Label {
+                    color: model.u_status === "true" ? "green" : "red"
+                    text: model.u_status === "true" ? "Online" : "Offline"
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    anchors.rightMargin: 5
+                    anchors.bottomMargin: 5
+                    font.family: "Helvetica"
+                    font.pointSize: 7
+                }
             }
-        }
-        Button {
-            id: callHerrington
-            Layout.preferredWidth: 125
-            Layout.preferredHeight: 35
-            Layout.alignment: Qt.AlignHCenter
-            text: qsTr("Do NOT click!")
-            contentItem: Text {
-                text: callHerrington.text
-                font: callHerrington.font
-                opacity: enabled ? 1.0 : 0.3
-                color: "green"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-            background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 40
-                opacity: enabled ? 1 : 0.3
-                color: callHerrington.down ? "#f0f0f0" : "#fdfdfd"
-                border.color: "indigo"
-                border.width: 1
-                radius: 2
-            }
-            onClicked: mainWindow.requestMessage();
         }
     }
-
-
     // Footer.
     footer: Label {
         id: footer

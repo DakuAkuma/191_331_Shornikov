@@ -18,6 +18,8 @@ ApplicationWindow {
     signal btnHTTPResponse()
     signal requestMessage()
     signal getFriends()
+    signal fillCrypto()
+    signal fillDeCrypto()
 
     SwipeView {
         id: swipeView
@@ -45,10 +47,11 @@ ApplicationWindow {
         Page5download {
             id: page5download
         }
-        /*
-        Page {
-        }
 
+        Page6crypto {
+            id: page6crypto
+        }
+        /*
         Page {
         }
 
@@ -145,7 +148,7 @@ ApplicationWindow {
                 elide: Text.ElideRight
             }
         }
-        /*
+
         TabButton {
             id: buttonLab6
             text: qsTr("Lab 6")
@@ -160,7 +163,7 @@ ApplicationWindow {
                 elide: Text.ElideRight
             }
         }
-
+        /*
         TabButton {
             id: buttonLab7
             text: qsTr("Lab 7")

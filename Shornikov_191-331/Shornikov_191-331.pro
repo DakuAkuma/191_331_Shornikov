@@ -7,11 +7,20 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        cryptocontroller.cpp \
         friendsmodel.cpp \
         httpcontroller.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
+
+INCLUDEPATH += \
+        C:\Programms\Qt\Tools\OpenSSL\Win_x64\include\openssl # headers.
+LIBS += \
+        C:\Programms\Qt\Tools\OpenSSL\Win_x64\lib\libcrypto.lib # lib with table and functions.
+INCLUDEPATH += C:/Programms/Qt/Tools/OpenSSL/Win_x64/include
+
+LIBS += -L"C:/Programms/Qt/Tools/OpenSSL"
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -43,6 +52,7 @@ android {
 }
 
 HEADERS += \
+    cryptocontroller.h \
     friendsmodel.h \
     httpcontroller.h
 android: include(C:/Android/sdk/android_openssl/openssl.pri)

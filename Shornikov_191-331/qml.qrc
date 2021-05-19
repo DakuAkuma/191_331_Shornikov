@@ -12,5 +12,6 @@
         <file>Page3Network.qml</file>
         <file>Page4OAUTH2.qml</file>
         <file>Page5download.qml</file>
+        <file>Page6crypto.qml</file>
     </qresource>
 </RCC>

@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include "friendsmodel.h"
 
 class HTTPController : public QObject
 {
@@ -17,20 +18,22 @@ public:
         delete nam;
         delete proto;
         delete reply;
+        delete modelController;
     }
     explicit HTTPController(QObject *parent = nullptr);
 
     // Вместо глоб. переменной - свойство класса.
     QNetworkAccessManager * nam = nullptr;
     QString access_token;
-    QString session_secret_key;
+    friendsModel *modelController; // модель для ЛР_5.
 public slots:
     void sendPageInfo();
     void getPageInfo();
     void messageController();
     QString getToken(QString url); // Для получения токена.
+    void restCall(); // Для ЛР_5, получение 10 случайных друзей из списка.
 signals:
-    void sendMessage(QString msg);
+    void sendMessage(QString msg); // Для проверки работы сигналов.
 protected:
     QObject* proto;
     QNetworkReply* reply;

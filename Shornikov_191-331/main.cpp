@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QtWebView>
 #include "httpcontroller.h"
+#include "cryptocontroller.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,13 +12,18 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
     // Main preferences
+    QCoreApplication::setOrganizationName(QStringLiteral("AkumasDevelopment"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("qt"));
     QQmlApplicationEngine engine;
     // Context created
     QQmlContext *context = engine.rootContext();
     // General HTTP controller
     HTTPController httpController;
+    cryptoController cryptoMain;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    context->setContextProperty("httpController", &httpController);
+    context->setContextProperty("httpController", &httpController); // for HTTP requests
+    context->setContextProperty("modelController", httpController.modelController); // for OAUTH2
+    context->setContextProperty("cryptoController", &cryptoMain);
     // До сюда можно запихивать в контекст!!!
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -35,6 +41,8 @@ int main(int argc, char *argv[])
             &mainController, SLOT(sendPageInfo()));
     QObject::connect(main, SIGNAL(requestMessage()),
                      &httpController, SLOT(messageController()));
+    QObject::connect(main, SIGNAL(getFriends()),
+                     &httpController, SLOT(restCall()));
 
     return app.exec();
 
