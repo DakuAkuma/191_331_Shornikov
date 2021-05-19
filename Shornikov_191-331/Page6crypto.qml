@@ -210,7 +210,7 @@ Page {
             implicitWidth: 150
             implicitHeight: 60
             opacity: enabled ? 1 : 0.3
-            color: chipherofflab6.down ? "#f0f0f0" : "#fdfdfd"
+            color: btnfordialoglab6.down ? "#f0f0f0" : "#fdfdfd"
             border.color: "indigo"
             border.width: 1
             radius: 2

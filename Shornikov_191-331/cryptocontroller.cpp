@@ -11,6 +11,8 @@
 #include <openssl/aes.h>
 #include <QBuffer>
 #include <QDebug>
+#include <QGuiApplication>
+#include <QClipboard>
 
 cryptoController::cryptoController(QObject *parent) : proto(parent)
 {
@@ -84,63 +86,73 @@ bool cryptoController::encryptFile(const QString & mkey, const QString & in_file
 }
 
 bool cryptoController::decryptFile(const QString & mkey, const QString & in_file){
-    EVP_CIPHER_CTX *ctx;
-    if(!(ctx = EVP_CIPHER_CTX_new())){
-        return false;
-    }
-
-    if (mkey.length() == 32){
-        m_iv = (unsigned char*) mkey.data();
-
-        if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, reinterpret_cast<unsigned char *>(mkey.toUtf8().data()), m_iv)) //дешифр
-        {
-            return false;
-        }
-    }
-    else{
-        psevdoKey = "31711230123454219878904547898765";
-
-        if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, reinterpret_cast<unsigned char *>(psevdoKey.toUtf8().data()), m_iv))
-        {
-            return false;
-        }
-    }
-
-    unsigned char ciphertext[256] = {0};
-    unsigned char plaintexttext[256] = {0};
-    int len = 0, plaintext_len = 0;
-
-    soursefile = in_file.mid(8);
-    QFile sourse_file(soursefile);
-    sourse_file.open(QIODevice::ReadOnly);
-
-    int position = soursefile.lastIndexOf(".");
-    QString file_extension = soursefile.mid(position);
-    QString soursefile_dec = soursefile.left(position) + "_decoded" + file_extension;
-
-    QFile file_modificate(soursefile_dec);
-    file_modificate.open(QIODevice::ReadWrite | QIODevice::Truncate);
-    plaintext_len = sourse_file.read((char *)plaintexttext, 256);
-
-    while(plaintext_len > 0){
-        if(1 != EVP_DecryptUpdate(ctx, ciphertext, &len, plaintexttext, plaintext_len))
-        {
+    if(QClipboard *clip = QGuiApplication::clipboard()) {
+        clip->clear();
+        EVP_CIPHER_CTX *ctx;
+        if(!(ctx = EVP_CIPHER_CTX_new())){
             return false;
         }
 
-        file_modificate.write((char *)ciphertext, len);
-        plaintext_len = sourse_file.read((char *)plaintexttext, 256);
+        if (mkey.length() == 32){
+            m_iv = (unsigned char*) mkey.data();
 
+            if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, reinterpret_cast<unsigned char *>(mkey.toUtf8().data()), m_iv)) //дешифр
+            {
+                return false;
+            }
+        }
+        else{
+            psevdoKey = "31711230123454219878904547898765";
+
+            if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, reinterpret_cast<unsigned char *>(psevdoKey.toUtf8().data()), m_iv))
+            {
+                return false;
+            }
+        }
+
+        unsigned char ciphertext[256] = {0};
+        unsigned char plaintexttext[256] = {0};
+        //QString toBoard;
+        int len = 0, plaintext_len = 0;
+
+        soursefile = in_file.mid(8);
+        QFile sourse_file(soursefile);
+        sourse_file.open(QIODevice::ReadOnly);
+
+        int position = soursefile.lastIndexOf(".");
+        QString file_extension = soursefile.mid(position);
+        QString soursefile_dec = soursefile.left(position) + "_decoded" + file_extension;
+
+        QFile file_modificate(soursefile_dec);
+        file_modificate.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        plaintext_len = sourse_file.readLine((char *)plaintexttext, 256);
+
+        while(plaintext_len > 0){
+            if(1 != EVP_DecryptUpdate(ctx, ciphertext, &len, plaintexttext, plaintext_len))
+            {
+                return false;
+            }
+
+            file_modificate.write((char *)ciphertext, len);
+            //qDebug() << (char *)ciphertext;
+            clip->setText(clip->text()+QString::fromUtf8((const char *)ciphertext, len));
+            plaintext_len = sourse_file.readLine((char *)plaintexttext, 256);
+
+        }
+
+        if(!EVP_DecryptFinal_ex(ctx, ciphertext + len, &len))
+            return false;
+
+        qDebug() << clip->text();
+
+        file_modificate.write((char*)ciphertext, len);
+        EVP_CIPHER_CTX_free(ctx);
+
+        sourse_file.close();
+        file_modificate.close();
+
+        return true;
     }
 
-    if(!EVP_DecryptFinal_ex(ctx, ciphertext + len, &len))
-        return false;
-
-    file_modificate.write((char*)ciphertext, len);
-    EVP_CIPHER_CTX_free(ctx);
-
-    sourse_file.close();
-    file_modificate.close();
-
-    return true;
+    return false;
 }

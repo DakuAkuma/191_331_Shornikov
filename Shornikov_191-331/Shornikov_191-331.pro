@@ -1,4 +1,4 @@
-QT += core quick qml multimedia multimediawidgets network webview
+QT += core quick gui qml multimedia multimediawidgets network webview
 
 CONFIG += c++11
 
@@ -39,6 +39,11 @@ android {
     QT += androidextras
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+    my_files.path = /assets
+    my_files.files = $$PWD/cryptoTest
+
+    INSTALLS += my_files
 
     DISTFILES += \
         android/AndroidManifest.xml \
