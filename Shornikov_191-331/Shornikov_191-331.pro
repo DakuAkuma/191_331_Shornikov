@@ -14,13 +14,12 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
-INCLUDEPATH += \
-        C:\Programms\Qt\Tools\OpenSSL\Win_x64\include\openssl # headers.
-LIBS += \
+win32 {
+LIBS += C:\Programms\Qt\Tools\OpenSSL\Win_x64\lib\libssl.lib \
         C:\Programms\Qt\Tools\OpenSSL\Win_x64\lib\libcrypto.lib # lib with table and functions.
+}
 INCLUDEPATH += C:/Programms/Qt/Tools/OpenSSL/Win_x64/include
 
-LIBS += -L"C:/Programms/Qt/Tools/OpenSSL"
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -44,6 +43,11 @@ android {
     my_files.files = $$PWD/cryptoTest
 
     INSTALLS += my_files
+
+#    LIBS += C:\Android\sdk\android_openssl\static\lib\arm\libcrypto.a \
+#        C:\Android\sdk\android_openssl\static\lib\arm\libssl.a \
+    LIBS += C:\Android\sdk\android_openssl\static\lib\arm64\libcrypto.a \
+        C:\Android\sdk\android_openssl\static\lib\arm64\libssl.a
 
     DISTFILES += \
         android/AndroidManifest.xml \

@@ -112,7 +112,7 @@ QString cryptoController::decryptFile(const QString & mkey, const QString & in_f
 
         unsigned char ciphertext[256] = {0};
         unsigned char plaintexttext[256] = {0};
-        //QString toBoard;
+        QString toBoard;
         int len = 0, plaintext_len = 0;
 
         soursefile = in_file.mid(8);
@@ -135,7 +135,7 @@ QString cryptoController::decryptFile(const QString & mkey, const QString & in_f
 
             //file_modificate.write((char *)ciphertext, len);
             //qDebug() << (char *)ciphertext;
-            clip->setText(clip->text()+QString::fromUtf8((const char *)ciphertext, len).replace("�",""));
+            toBoard += QString::fromUtf8((const char *)ciphertext, len).replace("�","");
             plaintext_len = sourse_file.readLine((char *)plaintexttext, 256);
 
         }
@@ -143,15 +143,16 @@ QString cryptoController::decryptFile(const QString & mkey, const QString & in_f
         if(!EVP_DecryptFinal_ex(ctx, ciphertext + len, &len))
             return "";
 
-        qDebug() << clip->text();
+        qDebug() << toBoard;
 
         //file_modificate.write((char*)ciphertext, len);
         EVP_CIPHER_CTX_free(ctx);
 
         sourse_file.close();
         //file_modificate.close();
+        clip->setText(toBoard);
 
-        return clip->text();
+        return toBoard;
     }
 
     return "";

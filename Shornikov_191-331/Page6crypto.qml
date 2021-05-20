@@ -95,8 +95,7 @@ Page {
         // Turn on interactive showing of scroll bars.
         ScrollBar.horizontal.interactive: true
         ScrollBar.vertical.interactive: true
-        // Let the text area take 250 px in width and 100 px in height.
-        width: 500
+        width: 550
         height: 100
         anchors.topMargin: 60
         anchors.horizontalCenter: parent.horizontalCenter
