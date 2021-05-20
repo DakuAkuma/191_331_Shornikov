@@ -17,7 +17,7 @@ public:
     QString soursefile; // choosen file
 public slots:
     bool encryptFile(const QString & mkey, const QString &in_file);
-    bool decryptFile(const QString & mkey, const QString &in_file);
+    QString decryptFile(const QString & mkey, const QString &in_file);
 protected:
     QObject *proto;
 private: // они все начинаются с m_

@@ -85,12 +85,12 @@ bool cryptoController::encryptFile(const QString & mkey, const QString & in_file
     return true;
 }
 
-bool cryptoController::decryptFile(const QString & mkey, const QString & in_file){
+QString cryptoController::decryptFile(const QString & mkey, const QString & in_file){
     if(QClipboard *clip = QGuiApplication::clipboard()) {
         clip->clear();
         EVP_CIPHER_CTX *ctx;
         if(!(ctx = EVP_CIPHER_CTX_new())){
-            return false;
+            return "";
         }
 
         if (mkey.length() == 32){
@@ -98,7 +98,7 @@ bool cryptoController::decryptFile(const QString & mkey, const QString & in_file
 
             if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, reinterpret_cast<unsigned char *>(mkey.toUtf8().data()), m_iv)) //дешифр
             {
-                return false;
+                return "";
             }
         }
         else{
@@ -106,7 +106,7 @@ bool cryptoController::decryptFile(const QString & mkey, const QString & in_file
 
             if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, reinterpret_cast<unsigned char *>(psevdoKey.toUtf8().data()), m_iv))
             {
-                return false;
+                return "";
             }
         }
 
@@ -123,36 +123,36 @@ bool cryptoController::decryptFile(const QString & mkey, const QString & in_file
         QString file_extension = soursefile.mid(position);
         QString soursefile_dec = soursefile.left(position) + "_decoded" + file_extension;
 
-        QFile file_modificate(soursefile_dec);
-        file_modificate.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        //QFile file_modificate(soursefile_dec);
+        //file_modificate.open(QIODevice::ReadWrite | QIODevice::Truncate);
         plaintext_len = sourse_file.readLine((char *)plaintexttext, 256);
 
         while(plaintext_len > 0){
             if(1 != EVP_DecryptUpdate(ctx, ciphertext, &len, plaintexttext, plaintext_len))
             {
-                return false;
+                return "";
             }
 
-            file_modificate.write((char *)ciphertext, len);
+            //file_modificate.write((char *)ciphertext, len);
             //qDebug() << (char *)ciphertext;
-            clip->setText(clip->text()+QString::fromUtf8((const char *)ciphertext, len));
+            clip->setText(clip->text()+QString::fromUtf8((const char *)ciphertext, len).replace("�",""));
             plaintext_len = sourse_file.readLine((char *)plaintexttext, 256);
 
         }
 
         if(!EVP_DecryptFinal_ex(ctx, ciphertext + len, &len))
-            return false;
+            return "";
 
         qDebug() << clip->text();
 
-        file_modificate.write((char*)ciphertext, len);
+        //file_modificate.write((char*)ciphertext, len);
         EVP_CIPHER_CTX_free(ctx);
 
         sourse_file.close();
-        file_modificate.close();
+        //file_modificate.close();
 
-        return true;
+        return clip->text();
     }
 
-    return false;
+    return "";
 }

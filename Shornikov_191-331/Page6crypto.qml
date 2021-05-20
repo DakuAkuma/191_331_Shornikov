@@ -68,24 +68,26 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         font.family: "Helvetica"
         font.pixelSize: 17
+        color: "red"
         font.bold: true
-        anchors.bottom: textforkey.top
-        anchors.bottomMargin: 60
+        anchors.bottom: textforkey.bottom
+        anchors.bottomMargin: 25
     }
 
     TextField{
         id: textforkey
         placeholderText: qsTr("Ключ писать сюда")
+        anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: chipheronlab6.top
         horizontalAlignment: TextInput.AlignHCenter
         width: 320
+        height: 50
         font.family: "Helvetica"
         font.pixelSize: 15
-        anchors.bottomMargin: 40
+        anchors.bottomMargin: 20
         maximumLength: 32
     }
-    /*
+
     ScrollView {
         id: viewlab6
         // Streamline the text
@@ -93,14 +95,12 @@ Page {
         // Turn on interactive showing of scroll bars.
         ScrollBar.horizontal.interactive: true
         ScrollBar.vertical.interactive: true
-        Layout.row: 0
-        Layout.column: 1
         // Let the text area take 250 px in width and 100 px in height.
-        Layout.fillWidth: true
-        Layout.maximumWidth: 250
-        Layout.maximumHeight: 100
-        // Align on right side.
-        Layout.alignment: Qt.AlignRight
+        width: 500
+        height: 100
+        anchors.topMargin: 60
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: textforkey.top
         TextArea{
             id: cryptoHolder
             // Just a placeholder
@@ -113,15 +113,15 @@ Page {
             }
         }
     }
-    */
+
     Button{
         id: chipheronlab6
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors.top: viewlab6.bottom
         text: "Зашифровать"
         font.family: "Helvetica"
         font.pixelSize: 18
-        anchors.bottomMargin: 120
+        anchors.topMargin: 15
         visible: if(fileDialoglab6.fileUrl === 0)
                      false
                  else
@@ -153,7 +153,7 @@ Page {
         id: chipherofflab6
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: chipheronlab6.bottom
-        anchors.topMargin: 30
+        anchors.topMargin: 20
         text: "Расшифровать"
         font.family: "Helvetica"
         font.pixelSize: 18
@@ -162,7 +162,7 @@ Page {
                  else
                      true
         onClicked: {
-            cryptoController.decryptFile(textforkey.text, fileDialoglab6.fileUrls)
+            cryptoHolder.text = cryptoController.decryptFile(textforkey.text, fileDialoglab6.fileUrls)
         }
         contentItem: Text {
             text: chipherofflab6.text
@@ -186,10 +186,12 @@ Page {
 
     Button {
         id: btnfordialoglab6
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 15
-        anchors.top: parent.top
-        anchors.topMargin: 55
+        font.pixelSize: 18
+        anchors.top: chipheronlab6.top
+        anchors.left: parent.left
+        anchors.right: chipheronlab6.left
+        anchors.rightMargin: 10
+        anchors.leftMargin: 25
         text: "Выбрать файл"
         onClicked: fileDialoglab6.open()
 
