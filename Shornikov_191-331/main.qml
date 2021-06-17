@@ -25,7 +25,7 @@ ApplicationWindow {
         id: swipeView
         objectName: "swipeView"
         anchors.fill: parent
-        currentIndex: tabBar.currentIndex
+        //currentIndex: tabBar.currentIndex
 
         Page1GUI {
             id: page1GUI
@@ -65,7 +65,7 @@ ApplicationWindow {
         }
         */
     }
-
+    /*
     footer: TabBar {
         id: tabBar
         currentIndex: swipeView.currentIndex
@@ -222,6 +222,100 @@ ApplicationWindow {
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
-        }*/
+        }
+    }*/
+    Drawer{
+        id: drawer
+        width: 0.45 * parent.width
+        height: parent.height
+
+        background: Rectangle {
+            anchors.fill: parent
+            color: "green"
+        }
+
+        GridLayout{
+            width: parent.width
+            columns: 1
+
+            Label{
+                id: label
+                text: "Содержание"
+
+                anchors.top: parent.top
+                anchors.topMargin: 10
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 18
+                color: "indigo"
+            }
+
+            Rectangle{
+                Layout.fillWidth: true
+                height: 1
+                color: "green"
+
+                anchors.top: label.bottom
+                anchors.topMargin: 4
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 5
+                anchors.rightMargin: 5
+            }
+
+            Button{
+                text: "1. GUI"
+                flat: true
+                onClicked: {
+                    swipeView.currentIndex = 0
+                    drawer.close()
+                }
+            }
+
+            Button{
+                text: "2. Multimedia"
+                flat: true
+                onClicked: {
+                    swipeView.currentIndex = 1
+                    drawer.close()
+                }
+            }
+
+            Button{
+                text: "3. HTTP"
+                flat: true
+                onClicked: {
+                    swipeView.currentIndex = 2
+                    drawer.close()
+                }
+            }
+
+            Button{
+                text: "4. Oauth"
+                flat: true
+                onClicked: {
+                    swipeView.currentIndex = 3
+                    drawer.close()
+                }
+            }
+
+            Button{
+                text: "5. REST API"
+                flat: true
+                onClicked: {
+                    swipeView.currentIndex = 4
+                    drawer.close()
+                }
+            }
+
+            Button{
+                text: "6. SSL"
+                flat: true
+                onClicked: {
+                    swipeView.currentIndex = 5
+                    drawer.close()
+                }
+            }
+        }
     }
 }

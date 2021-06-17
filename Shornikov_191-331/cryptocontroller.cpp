@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QClipboard>
+#include <QQmlFile>
 
 cryptoController::cryptoController(QObject *parent) : proto(parent)
 {
@@ -47,7 +48,7 @@ bool cryptoController::encryptFile(const QString & mkey, const QString & in_file
     int len = 0, plaintext_len = 0;
 
     soursefile = in_file.mid(8);
-    QFile sourse_file(soursefile);
+    QFile sourse_file(QQmlFile::urlToLocalFileOrQrc(soursefile));
     sourse_file.open(QIODevice::ReadOnly);
 
     int position = soursefile.lastIndexOf(".");

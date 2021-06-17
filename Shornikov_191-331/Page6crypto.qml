@@ -95,7 +95,7 @@ Page {
         // Turn on interactive showing of scroll bars.
         ScrollBar.horizontal.interactive: true
         ScrollBar.vertical.interactive: true
-        width: 550
+        width: 275
         height: 100
         anchors.topMargin: 60
         anchors.horizontalCenter: parent.horizontalCenter
@@ -105,6 +105,7 @@ Page {
             // Just a placeholder
             placeholderText: qsTr("Защифруйте текст")
             readOnly: true
+            wrapMode: Text.WordWrap
             placeholderTextColor: "darkgray"
             background: Rectangle {
                 // Background of text area.
@@ -161,6 +162,7 @@ Page {
                  else
                      true
         onClicked: {
+            cryptoHolder.text = fileDialoglab6.fileUrls
             cryptoHolder.text = cryptoController.decryptFile(textforkey.text, fileDialoglab6.fileUrls)
         }
         contentItem: Text {
